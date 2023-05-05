@@ -85,8 +85,8 @@ module my_chip (
     input logic clock,
     input logic reset // Important: Reset is ACTIVE-HIGH
 );
-    
-    assign io_in[3:0] = {reset, left, right, read_gs};
+    logic clk, read_gs, left, right;
+    assign {left, right, read_gs} = io_in[3:0];
     assign clk = clock;
 
     logic [127:0] game_state;
@@ -141,13 +141,15 @@ module my_chip (
     assign game_state = fallen_state | piece_state; 
 
     // Shift out 
-    logic [6:0] idx_up, idx_low;
-    assign idx_up = idx_low + 7'd7;
+    logic [6:0] idx;
+    logic [7:0] iout;
+    assign iout = game_state >> idx;
+    
     always_ff @(posedge clk)
-        if (reset) idx <= 4'd0;
+        if (reset) idx <= 7'd0;
         else if (read_gs) begin
-            io_out[8:0] <= game_state[idx_up:idx_low]
-            idx <= idx + 6'd8;
+            io_out[8:0] <= iout;
+            idx <= idx + 7'd8;
         end
 
 endmodule
