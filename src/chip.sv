@@ -114,12 +114,12 @@ module my_chip (
 
     // Collision detection
     // Check bottom of the board
-    logic collision;
-    always_comb begin
-        if (y == 7'd16) begin
-            collision = 1'b1;
-        end
-    end
+    // logic collision;
+    // always_comb begin
+    //     if (y == 7'd16) begin
+    //         collision = 1'b1;
+    //     end
+    // end
 
     // Fallen pieces register. When a collision occurs this is updated.
     always_ff @(posedge clk)
