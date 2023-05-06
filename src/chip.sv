@@ -6,7 +6,7 @@ module random_tetromino (
 
     logic [2:0] rand_num;
     logic [3:0] block0, block1, block2, block3;
-    assign rand_num = $urandom_range(0, 6);
+    assign rand_num = 0;
 
     always_comb begin
         case (rand_num)
