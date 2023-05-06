@@ -1,40 +1,19 @@
-# (project name)
+# Tetris
 
-(your name)
+Rashi Kejriwal
 18-224/624 Spring 2023 Final Tapeout Project
 
 ## Overview
-
-(high-level overview of what your project does, in a few lines)
+A simplified implementation of Tetris in SystemVerilog. This will include a 8 x 16 matrix of 1 bit registers that will maintain the game state with pseudo-random tetromino generation, one direction rotation, and right (wrap around) movement.
 
 ## How it Works
-
-(deeper description of your project's internal operations, along with any diagrams. large parts of this can likely be copied from your project design plan and/or RTL checkpoint submission)
-
-To add images, upload them into the repo and use the following format to embed them in markdown:
-
-![](image1.png)
+The Datapath will include the game state matrix. This will contain the pieces that have fallen and have collided with the board edges or with another piece. The game will wait for the start_game button to be pressed. Once this is pressed, the state will transition, and a random piece will appear on the top, right corner of the board. Then, state will transition again. The x and y position of one block of the piece will be maintained in registers and the random piece selected will also be saved in a register to obtain the location of the other blocks. Then the state will transition again, and the y position will increase based on the clock, and x and y based on the other inputs. Once the collision is detected which will be checked every cycle with the game state matrix the piece will update the matrix. Lastly, there will be a transition back to the falling piece state and this will continue until a collision with the top board has been detected and then the game will be over. When a row is cleared, the matrix will be shifted accordingly with logic. The FSM will have 5 states including Start, New Piece, Falling Piece, Collision, and Game Over. Each of these states will maintain how the game state matrix can be modified. 
 
 ## Inputs/Outputs
-
-(describe what each of the 12 input and 12 output pins are used for; )
-
-(if you have any specific dependency on clock frequency; i.e. for visual effects or for an external interface, explain it here.)
+Inputs: Left, Right, Read_gs, Clock, Reset
+Outputs: Game state
 
 ## Hardware Peripherals
+The external hardware peripherals are up to the user. The chip will output the Tetris game state 8 bits at a time. This 
+should be read serially by a microcontroller and then can be hooked up with any form of matrix display such as an LED matrix.
 
-(if you have any external hardware peripherals such as buttons, LEDs, sensors, etc, please explain them here. otherwise, remove this section)
-
-## Design Testing / Bringup
-
-(explain how to test your design; if relevant, give examples of inputs and expected outputs)
-
-(if you would like your design to be tested after integration but before tapeout, provide a Python script that uses the Debug Interface posted on canvas and explain here how to run the testing script)
-
-## Media
-
-(optionally include any photos or videos of your design in action)
-
-## (anything else)
-
-If there is anything else you would like to document about your project such as background information, design space exploration, future ideas, verification details, references, etc etc. please add it here. This template is meant to be a guideline, not an exact format that you're required to follow.
